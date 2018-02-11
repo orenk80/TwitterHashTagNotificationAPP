@@ -8,6 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 @SpringBootApplication
 public class Application {
@@ -83,6 +88,12 @@ public class Application {
             log.info("");
         };
     }*/
+
+   @Bean(name="onlineClients")
+   @Scope(scopeName = "singleton")
+   public ConcurrentMap<String, ResponseBodyEmitter> onlineClients(){
+       return new ConcurrentHashMap<String, ResponseBodyEmitter>();
+    }
 
     public static void main(String[] args) throws InterruptedException {
         SpringApplication.run(Application.class, args);
